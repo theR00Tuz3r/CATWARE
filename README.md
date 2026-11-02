@@ -6,6 +6,11 @@ a basic python tool im making for myself
    * basic af port scanner
    * very basic network stresser
    * ssh thingy
-   * a stupid http request maker
 2. hash :
    * basic hash cracker
+   * simple text to hash
+3. payloads
+   * very basic reverse shell maker
+   * stupid msfveom wrapper
+4. web
+   * a stupid http request maker
