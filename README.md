@@ -2,7 +2,7 @@
 a basic python tool im making for myself
 > **Authorized use only** if ur gonna use this only run this against devices you own or have permission to test. cuz its illegal in most jurisdictions.
 
-# tools
+## tools
 1. network :
    * basic af port scanner
    * very basic network stresser
@@ -17,7 +17,7 @@ a basic python tool im making for myself
    * a stupid http request maker
    * basic web directory bruteforce
 
-# Installation
+## Installation
 ```bash
 git clone https://github.com/theR00Tuz3r/CATWARE.git
 cd CATWARE
