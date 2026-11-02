@@ -133,6 +133,7 @@ dirf -> web directory bruteforce
 req -> request maker
 hashr -> hash text
 msfv -> msfveom payload maker
+tcpserver -> basic tcp server
 clear -> clear screen
 exit -> exit
 """
@@ -209,6 +210,25 @@ def dos():
     wait(0.3)
 def stl():
     print("boo!")
+def tcpserver():
+    tcip = input("server ip: ")
+    tcport = int(input("server port: "))
+    def main():
+        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server.bind((tcip, tcport))
+        server.listen(5)
+        print(f"listening on {tcip}:{tcport}")
+        while True:
+            client, address = server.accept()
+            client_hanlder = threading.Thread(target=handle_client, args=(client,))
+            client_hanlder.start()
+    def handle_client(client_socket):
+        with client_socket as sock:
+            request = sock.recv(1024)
+            print(f"recived : {request.decode("utf-8")}")
+            sock.send(b":3")
+    if __name__ == "__main__":
+        main()
 def hashr():
     algorithms = {
         "MD5": hashlib.md5,
@@ -235,7 +255,7 @@ def dirf():
     __      _____| |__    / _|_/\__ ___| | __
     \ \ /\ / / _ \ '_ \  | |_\    // __| |/ /
      \ V  V /  __/ |_) | |  _/_  _\ (__|   < 
-      \_/\_/ \___|_.__/  |_|   \/  \___|_|\_\ :3 
+      \_/\_/ \___|_.__/  |_|   \/  \___|_|\_\ :3
     --- catware ---
     """
     print(banner)
@@ -584,6 +604,8 @@ while True:
         dos()
     elif opt == "dirf":
         dirf()
+    elif opt == "tcpserver":
+        tcpserver()
     elif opt == "clear":
         clr()
     elif opt == "crack":
