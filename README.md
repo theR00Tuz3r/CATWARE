@@ -1,5 +1,6 @@
 ## CATWARE
 a basic python tool im making for myself
+> **Authorized use only** if ur gonna use this only run this against devices you own or have permission to test. cuz its illegal in most jurisdictions.
 
 # tools
 1. network :
