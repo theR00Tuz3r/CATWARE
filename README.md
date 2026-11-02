@@ -15,3 +15,10 @@ a basic python tool im making for myself
    * stupid msfveom wrapper
 4. web
    * a stupid http request maker
+
+# Installation
+```bash
+git clone https://github.com/theR00Tuz3r/CATWARE.git
+cd CATWARE
+pip install -r requirements.txt
+```
