@@ -6,7 +6,7 @@ a basic python tool im making for myself
 1. network :
    * basic af port scanner
    * very basic network stresser
-   * ssh thingy
+   * simple tcp server
 2. hash :
    * basic hash cracker
    * simple text to hash
