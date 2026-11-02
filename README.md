@@ -23,3 +23,7 @@ git clone https://github.com/theR00Tuz3r/CATWARE.git
 cd CATWARE
 pip install -r requirements.txt
 ```
+## Usage
+```
+python3 main.py
+```
