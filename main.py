@@ -69,7 +69,7 @@ banner = """             ⣀⣠⣤⣶⣶⣶⣶⣶⣶⣶⣦⣀⠀⠀⠀⠀⢀⣀�
    ⠀⠀⠀⠀⠀⠀⠈⠙⠿⣿⣿⣿⣼⣿⣿⣟⠀⠀⡠⠊⠀⣀⣀⣠⣴⣶⠿⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀
    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⠿⣿⣿⣿⣿⣶⣶⣷⣶⣶⡿⠿⠛⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⠛⠛⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
--fancy cat :3- ---catware--- """
+-catware :3- ---catware--- """
 dosser = """
 ⣴⡿⠶⠀⠀⠀⣦⣀⣴⠀⠀⠀⠀
 ⣿⡄⠀⠀⣠⣾⠛⣿⠛⣷⠀⠿⣦
@@ -586,7 +586,7 @@ def compile():
             print("""theres a problem. ether rustc isnt installed
             (install with [apt insyall rustc]) or the path is invalid""")
 while True:
-    opt = input("root@f4ncy>> ")
+    opt = input("root@c4twar3>> ")
     if opt == "" or opt == " ":
         print("please input something")
         continue
