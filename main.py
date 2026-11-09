@@ -15,6 +15,7 @@ from datetime import datetime
 from os import system as command
 from time import sleep as wait
 import requests
+import shutil
 command("clear")
 def slow_print(text, delay=0.08):
     for char in text:
@@ -48,7 +49,7 @@ port_banner = """
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⡀⠀⠀⣸⠀⠀⠀⠀⢀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠳⡀⠀⠀⠀⠀⠀⠀⡎⠉⠉⠉⡁⠅⠸⠀⠀⠀⠀⠀⠀⢠⠤⠤⠸⠀⠈⠉⠉⠁⢇⠀⢀⢠⡸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠦⣀⡀⢂⣐⡴⠣⠤⠼⠔⠛⠀⠀⡄⠀⠀⢀⢠⡀⡜⠀⠀⠀⠀⠀⠀⠀⠀⠈⠦⣸⡼⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠲⠤⠼⠒⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"""
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠲⠤⠼⠒⠋⠀"""
 banner = """             ⣀⣠⣤⣶⣶⣶⣶⣶⣶⣶⣦⣀⠀⠀⠀⠀⢀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⢠⢤⣠⣶⣿⣿⡿⠿⠛⠛⠛⠛⠉⠛⠛⠛⠛⠿⣷⡦⠞⣩⣶⣸⡆⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⣠⣾⡤⣌⠙⠻⣅⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠔⠋⢀⣾⣿⣿⠃⣇⠀⠀⠀⠀⠀⠀⠀
@@ -69,7 +70,7 @@ banner = """             ⣀⣠⣤⣶⣶⣶⣶⣶⣶⣶⣦⣀⠀⠀⠀⠀⢀⣀�
    ⠀⠀⠀⠀⠀⠀⠈⠙⠿⣿⣿⣿⣼⣿⣿⣟⠀⠀⡠⠊⠀⣀⣀⣠⣴⣶⠿⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀
    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⠿⣿⣿⣿⣿⣶⣶⣷⣶⣶⡿⠿⠛⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⠛⠛⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
--catware :3- ---catware--- """
+-fancy cat :3- ---catware--- """
 dosser = """
 ⣴⡿⠶⠀⠀⠀⣦⣀⣴⠀⠀⠀⠀
 ⣿⡄⠀⠀⣠⣾⠛⣿⠛⣷⠀⠿⣦
@@ -133,6 +134,7 @@ dirf -> web directory bruteforce
 req -> request maker
 hashr -> hash text
 msfv -> msfveom payload maker
+mtrx -> matrix screen saver thing 
 tcpserver -> basic tcp server
 clear -> clear screen
 exit -> exit
@@ -320,6 +322,101 @@ def dirf():
         print("\nDone.")
     if __name__ == "__main__":
         main()
+
+def matrix():
+    CHARS = (
+        "0123456789"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "ｱｲｳｴｵｶｷｸｹｺ"
+        "ｻｼｽｾｿﾀﾁﾂﾃﾄ"
+        "ﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎ"
+        "ﾏﾐﾑﾒﾓﾔﾕﾖ"
+        "ﾗﾘﾙﾚﾛﾜﾝ"
+    )
+    WHITE = "\033[97m"
+    GRAY = "\033[37m"
+    DARK_GRAY = "\033[2;37m"
+    RESET = "\033[0m"
+    HIDE_CURSOR = "\033[?25l"
+    SHOW_CURSOR = "\033[?25h"
+    CLEAR = "\033[2J"
+
+    def matrix_rain():
+        width, height = shutil.get_terminal_size()
+        drops = []
+        for x in range(width):
+            drops.append({
+                "y": random.randint(-height, 0),
+                "speed": random.uniform(0.3, 0.8),
+                "length": random.randint(8, 25),
+                "chars": [
+                    random.choice(CHARS)
+                    for _ in range(30)
+                ]
+            })
+        print(HIDE_CURSOR + CLEAR, end="")
+        try:
+            while True:
+                new_width, new_height = shutil.get_terminal_size()
+                if new_width != width or new_height != height:
+                    width, height = new_width, new_height
+                    drops = [
+                        {
+                            "y": random.randint(-height, 0),
+                            "speed": random.uniform(0.3, 0.8),
+                            "length": random.randint(8, 25),
+                            "chars": [
+                                random.choice(CHARS)
+                                for _ in range(30)
+                            ]
+                        }
+                        for _ in range(width)
+                    ]
+                screen = [
+                    [" " for _ in range(width)]
+                    for _ in range(height)
+                ]
+                colors = [
+                    [RESET for _ in range(width)]
+                    for _ in range(height)
+                ]
+                for x, drop in enumerate(drops):
+                    y = int(drop["y"])
+                    for i in range(drop["length"]):
+                        char_y = y - i
+                        if 0 <= char_y < height:
+                            screen[char_y][x] = drop["chars"][i]
+
+                            if i == 0:
+                                colors[char_y][x] = WHITE
+                            elif i < 3:
+                                colors[char_y][x] = GRAY
+                            else:
+                                colors[char_y][x] = DARK_GRAY
+                    drop["y"] += drop["speed"]
+                    if y - drop["length"] > height:
+                        drop["y"] = random.randint(-30, -5)
+                        drop["speed"] = random.uniform(0.3, 0.8)
+                        drop["length"] = random.randint(8, 25)
+                        drop["chars"] = [
+                            random.choice(CHARS)
+                            for _ in range(30)
+                        ]
+                print("\033[H", end="")
+                for row, color_row in zip(screen, colors):
+                    for char, color in zip(row, color_row):
+                        print(color + char, end="")
+                    print(RESET)
+                time.sleep(0.04)
+        except KeyboardInterrupt:
+            pass
+        finally:
+            print(RESET + SHOW_CURSOR)
+            print("\nterminated.")
+
+
+    if __name__ == "__main__":
+        matrix_rain()
 
 
 def msfv():
@@ -586,7 +683,7 @@ def compile():
             print("""theres a problem. ether rustc isnt installed
             (install with [apt insyall rustc]) or the path is invalid""")
 while True:
-    opt = input("root@c4twar3>> ")
+    opt = input("root@f4ncy>> ")
     if opt == "" or opt == " ":
         print("please input something")
         continue
@@ -614,10 +711,11 @@ while True:
         compile()
     elif opt == "hashr":
         hashr()
+    elif opt == "mtrx":
+        matrix()
     elif opt == "exit":
         print("Goodbye!")
         break
     else:
         print(f"Unknown command: {opt}")
         print("Type 'help' for available commands")
-#hello :D
