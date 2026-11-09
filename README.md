@@ -16,6 +16,9 @@ a basic python tool im making for myself
 4. web
    * a stupid http request maker
    * basic web directory bruteforce
+   * html login bruteforce (soon)
+5. other
+   * cool matrix rain thingy
 
 ## Installation
 ```bash
